@@ -117,10 +117,15 @@ def ensure_multi(w):
 
 
 def load_set(w, set_id):
-    """Type prts://s<id> so MAA imports the set. Appends to the task list."""
+    """Type prts://s<id> so MAA imports the set. Appends to the task list.
+
+    The fetch makes MAA activate its own window, so this runs inside
+    keep_focus() with a settle window long enough for the fetch to land.
+    """
     before = len(stage_rows(w))
-    M.set_path(w, f"prts://s{set_id}")
-    time.sleep(3.0)  # the set is fetched over the network, then rows appear
+    with M.keep_focus():
+        M.set_path(w, f"prts://s{set_id}", settle=3.0)
+    time.sleep(0.8)
     after = len(stage_rows(w))
     return before, after
 
@@ -188,7 +193,8 @@ def main():
             print(f"    {cid:8} {stage:20} {title[:44]}")
         return 0
 
-    w = M.focus()
+    # no focus(): the UIA helpers restore the foreground after each mutation
+    w = M.win()
     if not M.tab_click(w, "作业"):
         print("ERROR: 找不到作业页")
         return 1
