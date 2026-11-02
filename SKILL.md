@@ -353,6 +353,14 @@ ls "$MAA_DIR/resource/Arknights-Tile-Pos" | grep -i "^act52"
 单关 EX 普通 15~21 点，突袭同价。一个 8 关的作业集跑满 16 场约 **240~340 点理智**。
 **开打前先看理智够不够**，中途理智不足 MAA 会停下。
 
+## 手动拖拽部署（作业缺失时的兜底）
+
+作业没出/作业失效/需要特定干员上场（如模组任务）时，agent 可以直接 adb 手搓：
+**点选卡 → swipe 拖到绿格 → 朝向确认**，全链路已在 TR-28 实测通过。
+坐标、节奏对策（5 秒操作延迟 vs 关卡时限）、教学关对话处理、模组任务
+（凛御银灰 CSR-X 邀约）的可行性评估都写在
+[references/manual-deploy.md](references/manual-deploy.md)。
+
 ## 共享核心
 
 本 skill 不自带 adb/MAA 层，复用 `arknights-maa-copilot` 的脚本：
