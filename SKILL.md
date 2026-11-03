@@ -312,6 +312,9 @@ cd ../arknights-maa-copilot/scripts
 
 python run_stage.py act52side_ex07 --job 107380   # 指定作业 id
 python run_stage.py BI-7 --file local.json        # 本地改造版作业（如模组任务补技能）
+python run_stage.py BP-6 --file BP6.json           # 模组任务批量流程：干员模组面板
+                                                   # 「解锁」→ 任务「前往 >」直达关卡（坐标见
+                                                   # references/manual-deploy.md v2 节）
 python run_stage.py act52side_ex05 --dry          # 只看排名
 ```
 
@@ -359,6 +362,9 @@ ls "$MAA_DIR/resource/Arknights-Tile-Pos" | grep -i "^act52"
 作业没出/作业失效/需要特定干员上场（如模组任务）时，agent 可以直接 adb 手搓：
 **点选卡 → swipe 拖到绿格 → 朝向确认**，全链路已在 TR-28 实测通过。
 坐标、节奏对策（5 秒操作延迟 vs 关卡时限）、教学关对话处理、模组任务
+批量流水线 v2（模组面板「前往>」直达关卡、作业练度核对 skill_level≤7、
+演习免费重试、已实测 BP-6/HS-8/DM-EX-3 三连清；已知问题：干员列表
+手势免疫、将进酒 IW 入口未找到、winocr 待换 rapidocr）
 （凛御银灰 CSR-X 邀约）的可行性评估都写在
 [references/manual-deploy.md](references/manual-deploy.md)。
 
