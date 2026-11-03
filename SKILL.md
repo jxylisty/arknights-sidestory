@@ -311,6 +311,7 @@ ls "$MAA_DIR/resource/Arknights-Tile-Pos" | grep "^act55side"
 cd ../arknights-maa-copilot/scripts
 
 python run_stage.py act52side_ex07 --job 107380   # 指定作业 id
+python run_stage.py BI-7 --file local.json        # 本地改造版作业（如模组任务补技能）
 python run_stage.py act52side_ex05 --dry          # 只看排名
 ```
 

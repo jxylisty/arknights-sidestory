@@ -108,12 +108,14 @@ cop['actions']  # Deploy 后追加 8 个显式动作（2 充能 17SP 技能，19
 
 1. **`run_stage.py --job <id>` 会重新从 prts 拉原始作业**，本地改造版被
    绕过——第一局就是这样只放了 1 次技能（初始 SP 满了一层）。
-   用本地文件必须 monkeypatch：
+   现已支持本地文件一线运行（推荐）：
 
-   ```python
-   meta = {'content': json.dumps(cop_local, ensure_ascii=False)}
-   CA.fetch = lambda cid: meta   # 再调 run_stage.run(...)
+   ```bash
+   python run_stage.py BI-7 --file <改造版.json>        # 完整跑
+   python run_stage.py BI-7 --file <改造版.json> --dry  # 只校验 JSON
    ```
+
+   （旧法 monkeypatch `CA.fetch` 仍可用，但没必要了。）
 
 2. **MAA 任务链独立于驱动脚本**：python 超时返回 FAILED 后 MAA 照样在
    打在放技能（日志继续出「使用技能」）。别看到脚本超时就当失败——
