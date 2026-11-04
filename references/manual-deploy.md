@@ -135,30 +135,46 @@ prts 搜「<关卡>+模组」基本都有专用作业，但**必须核对 skill_
   **红 ✓ 永远不碰**。
 - 主界面「前往上一次作战」横幅仍是最快的单关重进方式。
 
+### 模组状态三分法（用户实战经验，最可靠的判据）
+
+干员详情页模组卡的**按钮形态**直接告诉你做不做：
+
+| 形态 | 含义 | 动作 |
+|---|---|---|
+| 「解锁」按钮 | 未解锁 | 做任务；完成后**还得花材料**才能真解锁 |
+| 向上双箭头 ↑↑ | 已解锁可升级 | 任务早就满了，只缺材料 |
+| 无任何标志 | STAGE MAX 满级 | 完全不用碰 |
+
+一个干员最多 3 个模组（如 CRU X / CRU Y），**逐分支判断**。2026-11-04 复核：
+乌尔比安 CRU X = STAGE 2（双箭头，用户早解锁过）、锁定的是 CRU Y；
+锏 SWO X 与黍 GUA X 已 STAGE 3 满级；赫德雷 CRU X 仍是「解锁」按钮
+（任务 1/5、0/1 未完成）。
+
 ### 已知问题（2026-11-04 盘点，当晚实证）
 
 1. **干员列表对整个 adb 输入层免疫（已盖棺）**：taps 全正常；`input swipe`、
    `input touchscreen swipe`、`input draganddrop`、sendevent 原始事件流
    （event4，含轴映射修正）、MAA 自带的 maatouch APK（app_process 跑通、
    握手 `^ 10 1920 1080 255` 正常）——全部滚不动这个列表。MAA 自己也不滚
-   （她的干员统计走 yituliu 数据同步，不走游戏内 UI）。**正道是绕**：
-   稀有度排序（首屏 14 个 6★）+ 模组陈列室总览 + 职业筛选。
-2. **将进酒 IW 入口**：乐章收录 → **SU 岁岁今朝** 线（将进酒/画中人/
-   洪炉示岁都在这条线的第二屏，用户确认翻过头了）。更快：终端右下
-   「前往上一次作战」横幅。
+   （她的干员统计走数据同步，不走游戏内 UI）。**正道是绕**：稀有度排序
+   （首屏 14 个 6★）+ 模组陈列室总览 + 职业筛选。
+2. **将进酒 IW 入口**（已解决）：乐章收录 → **SU 岁岁今朝** 线（将进酒/
+   画中人/洪炉示岁都在这条线的卡面里，之前是翻过头了）。更快的方式：
+   终端右下「前往上一次作战」横幅一点直达。
 3. **winocr 不行**：小字（STAGE 数字）必丢、美术字全瞎、合并行毁坐标。
-   rapidocr-onnxruntime 已在 anaconda 里装好（用户确认可开源），待接入
-   skill 的 OCR 层。
+   rapidocr-onnxruntime 已在 anaconda 装好、体积小可开源，待接入 skill
+   的 OCR 层（用户已同意这个方向）。
 4. copilot_search 的老关卡映射偶发拿到「#f#」突袭后缀 id → 已在
    copilot_api.stage_id_for 读写两侧剥后缀并清缓存（2026-11-04）。
 5. 会话中偶发 harness 幽灵任务（同一条 bash 被执行两次）——跑批量脚本
-   前先 `Get-Process python` 确认单实例。
+   前先确认单实例。
 6. **MuMu 12 端口会变**：MAA 配置写死 127.0.0.1:16384，模拟器更新后实际
-   监听 5555/7555（`Get-NetTCPConnection` 查 MuMuVMMHeadless）。改 MAA 的
-   `config/gui.new.json` 里 `Configurations.*.Gui.ConnectSettings.Address`
-   （要先杀 MAA 再改，它退出时会回写）。
+   监听 5555/7555（`Get-NetTCPConnection` 查 MuMuVMMHeadless 的监听端口）。
+   改 MAA 的 `config/gui.new.json` 里
+   `Configurations.*.Gui.ConnectSettings.Address`（**要先杀 MAA 再改**，
+   它退出时会回写覆盖）。
 7. **MAA copilot JSON 的 doc 必须是对象** `{"title":..., "details":...}`，
-   纯字符串会在 MAA 侧报「读取文件失败」→「未选择作业」。
+   纯字符串会让 MAA 报「读取文件失败」→「未选择作业」空转。
 8. **set_path 同路径不触发重载**：MAA 的 FileTreeBox 收到相同路径时
-   TextChanged 不触发，作业列表空。maa_drive.set_path 已修（先清空再
-   SetValue，重试 3 次等控件 enabled）。
+   TextChanged 不触发，作业列表保持空。maa_drive.set_path 已修（先清空
+   再 SetValue，并等控件 enabled 后重试 3 次）。
